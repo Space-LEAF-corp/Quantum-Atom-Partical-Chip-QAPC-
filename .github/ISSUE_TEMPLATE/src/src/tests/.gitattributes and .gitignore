@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+.env
+
+
+* text=auto eol=lf
+
+
+---
+
+How to lock it down
+
+• Create the repo and push these files.
+• Generate hashes: after first commit, compute SHA-256 of canonical files and fill QR-DNA-MANIFEST.yaml.
+• Create a signed tag:• git tag -s v1.0.0 -m “QR-DNA Seal v1”
+• git push origin v1.0.0
+
+• Enable branch protection on main:• Require signed commits
+• Block changes to canonical files unless steward overrides
+• Require passing “verify” workflow
+
+• Publish README emphasizing “read-only by default” and consent process.
+• Optionally add Sigstore cosign to sign releases.
+
+
+---
