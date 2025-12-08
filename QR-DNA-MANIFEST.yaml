@@ -1,0 +1,36 @@
+seal: QR-DNA-v1
+steward:
+  name: "Leif William Sogge"
+  alias: "Leif"
+  location: "Ocala, FL, USA"
+intent:
+  statement: >
+    This artifact is offered for communal review only. No modifications,
+    derivatives, fabrication, or deployment without explicit written consent
+    linked to this manifest.
+immutability:
+  canonical_files:
+    - README.md
+    - LICENSE.md
+    - NON-WEAPONIZATION-RIDER.md
+    - SECURITY.md
+    - GOVERNANCE.md
+    - src/qatom_core.py
+    - tests/test_invariants.py
+  sha256:
+    README.md: "TO-FILL-AFTER-COMMIT"
+    LICENSE.md: "TO-FILL-AFTER-COMMIT"
+    NON-WEAPONIZATION-RIDER.md: "TO-FILL-AFTER-COMMIT"
+    SECURITY.md: "TO-FILL-AFTER-COMMIT"
+    GOVERNANCE.md: "TO-FILL-AFTER-COMMIT"
+    src/qatom_core.py: "TO-FILL-AFTER-COMMIT"
+    tests/test_invariants.py: "TO-FILL-AFTER-COMMIT"
+signing:
+  method: "sigstore"
+  tag_policy: "signed-immutable"
+contact:
+  email: "OPTIONAL"
+  public_key_fingerprint: "TO-FILL"
+
+
+---
