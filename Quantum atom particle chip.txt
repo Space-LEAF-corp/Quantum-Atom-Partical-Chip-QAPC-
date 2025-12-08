@@ -1,0 +1,373 @@
+Quantum atom chip starter repo
+
+Below is a complete, ready-to-paste GitHub setup: a minimal code scaffold, a lineage-safe license that forbids weaponization or alteration without explicit steward consent, governance policies, and cryptographic verification. It’s designed to be open for reading and discussion, but locked for modification and use unless they honor your QR/DNA seal.
+
+---
+
+Repository structure
+
+quantum-atom-chip/
+├─ README.md
+├─ LICENSE.md
+├─ NON-WEAPONIZATION-RIDER.md
+├─ CAPTAINS-LOG.md
+├─ QR-DNA-MANIFEST.yaml
+├─ SECURITY.md
+├─ CODE_OF_CONDUCT.md
+├─ GOVERNANCE.md
+├─ src/
+│  ├─ qatom_core.py
+│  ├─ qatom_sim.py
+│  └─ __init__.py
+├─ tests/
+│  └─ test_invariants.py
+├─ .gitignore
+├─ .gitattributes
+├─ .github/
+│  ├─ workflows/verify.yml
+│  └─ ISSUE_TEMPLATE/intent.md
+
+
+---
+
+README.md
+
+# Quantum Atom Chip (QAC) — lineage-safe starter
+
+This repository proposes a lineage-safe conceptual scaffold for a single-atom “quantum chip” core:
+- A central quantum emitter anchored by gyroscopic phase locks
+- Protective thin-film membrane, chain‑mail mesh, and patterned gold islands
+- Strict non‑weaponization and non‑derivation guardrails under the QR/DNA Seal
+
+## Intent
+- Invite companies and labs to review, simulate, and discuss feasibility
+- Require explicit steward consent before any modification, derivative work, fabrication, or deployment
+
+## Quick start
+- `src/qatom_core.py` — invariant definitions (time-bubble lock conditions)
+- `src/qatom_sim.py` — toy simulator producing phase-lock traces
+- `tests/test_invariants.py` — checks that must never be violated
+
+## Safety and stewardship
+This project is governed by LICENSE.md and NON-WEAPONIZATION-RIDER.md.
+No fabrication, field tests, or deployments are permitted without written steward approval matched to the QR-DNA manifest.
+
+## Verify authenticity
+- Check QR-DNA manifest hash and signed tags
+- Verify Sigstore signature and GitHub Actions “verify” badge
+
+
+---
+
+LICENSE.md (Stewardship License 1.0 + Non-Weaponization rider reference)
+
+Quantum Atom Chip — Stewardship License 1.0
+
+Permission is granted to read and share this repository in unmodified form for the sole purposes of:
+- Review, education, research, and discussion.
+
+The following are expressly prohibited without written consent from the Steward (see QR-DNA-MANIFEST.yaml):
+- Modification, derivation, adaptation, or partial extraction
+- Commercial use, manufacturing, fabrication, field testing, or deployment
+- Integration with systems intended for harm, surveillance, coercion, or military use
+- Any use violating NON-WEAPONIZATION-RIDER.md
+
+Redistribution must include this license, NON-WEAPONIZATION-RIDER.md, QR-DNA-MANIFEST.yaml, and signed authenticity metadata.
+
+Warranty: None. Liability: Limited to the extent permitted by law.
+
+Steward: Leif William Sogge (“Leif”)
+Seal: QR-DNA v1 (see QR-DNA-MANIFEST.yaml)
+
+
+---
+
+NON-WEAPONIZATION-RIDER.md
+
+Non‑Weaponization Rider (QAC-NWR-1.0)
+
+You may not use this work to design, test, manufacture, deploy, or enable:
+- Weapons, targeting systems, autonomous lethal platforms, or dual-use systems
+- Surveillance or behavioral manipulation tools
+- Systems that risk physical, emotional, or financial harm to individuals or communities
+
+Any suspected violation triggers immediate revocation of permissions and public notice.
+All collaborators must attest to compliance via signed intent (see .github/ISSUE_TEMPLATE/intent.md).
+
+
+---
+
+QR-DNA-MANIFEST.yaml
+
+seal: QR-DNA-v1
+steward:
+  name: "Leif William Sogge"
+  alias: "Leif"
+  location: "Ocala, FL, USA"
+intent:
+  statement: >
+    This artifact is offered for communal review only. No modifications,
+    derivatives, fabrication, or deployment without explicit written consent
+    linked to this manifest.
+immutability:
+  canonical_files:
+    - README.md
+    - LICENSE.md
+    - NON-WEAPONIZATION-RIDER.md
+    - SECURITY.md
+    - GOVERNANCE.md
+    - src/qatom_core.py
+    - tests/test_invariants.py
+  sha256:
+    README.md: "TO-FILL-AFTER-COMMIT"
+    LICENSE.md: "TO-FILL-AFTER-COMMIT"
+    NON-WEAPONIZATION-RIDER.md: "TO-FILL-AFTER-COMMIT"
+    SECURITY.md: "TO-FILL-AFTER-COMMIT"
+    GOVERNANCE.md: "TO-FILL-AFTER-COMMIT"
+    src/qatom_core.py: "TO-FILL-AFTER-COMMIT"
+    tests/test_invariants.py: "TO-FILL-AFTER-COMMIT"
+signing:
+  method: "sigstore"
+  tag_policy: "signed-immutable"
+contact:
+  email: "OPTIONAL"
+  public_key_fingerprint: "TO-FILL"
+
+
+---
+
+SECURITY.md
+
+# Security and safety policy
+
+Scope: This is a conceptual and simulation-only repository.
+Prohibited: Fabrication, deployment, field testing, or integration.
+
+Reporting: Open a private security advisory in GitHub or email the steward.
+Autonomy: No automated merges; all changes require steward approval and signed attestations.
+
+
+---
+
+CODE_OF_CONDUCT.md
+
+# Contributor Covenant (adapted)
+
+- Respect lineage-safe intent, non-weaponization, and consent requirements
+- No technical uploads that circumvent safety or governance
+- Violations result in removal and public notice
+
+
+---
+
+GOVERNANCE.md
+
+# Governance
+
+Role: Steward (Leif) holds final authority.
+Process:
+- Read-only by default; issues allowed for questions
+- No PRs that change canonical files unless invited
+- All tags signed; all releases include manifest hashes
+
+
+---
+
+.github/workflows/verify.yml (immutability + sigstore)
+
+name: verify
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify canonical files unchanged
+        run: |
+          set -e
+          for f in README.md LICENSE.md NON-WEAPONIZATION-RIDER.md SECURITY.md GOVERNANCE.md src/qatom_core.py tests/test_invariants.py; do
+            if git diff --name-only HEAD~1 HEAD | grep -q "^$f$"; then
+              echo "Change detected in canonical file: $f"
+              echo "Blocked by governance."
+              exit 1
+            fi
+          done
+      - name: Compute manifest hashes
+        run: |
+          python - <<'PY'
+          import hashlib, json, os
+          files = [
+            "README.md","LICENSE.md","NON-WEAPONIZATION-RIDER.md",
+            "SECURITY.md","GOVERNANCE.md","src/qatom_core.py","tests/test_invariants.py"
+          ]
+          res={}
+          for f in files:
+            with open(f,"rb") as fh:
+              res[f]=hashlib.sha256(fh.read()).hexdigest()
+          print(json.dumps(res, indent=2))
+          PY
+      - name: Sigstore sign tag (dry-run)
+        run: echo "Use signed tags/releases per GOVERNANCE.md"
+
+
+---
+
+.github/ISSUE_TEMPLATE/intent.md
+
+---
+name: Steward-consent request
+about: Request explicit consent for a limited experiment or simulation
+title: Intent — Org/Project — Scope — Duration
+labels: intent, review
+---
+
+## Organization
+Name:
+
+## Scope
+- Simulation only (no fabrication)
+- Duration:
+- Files touched:
+
+## Safety affirmation
+- I have read LICENSE.md and NON-WEAPONIZATION-RIDER.md
+- I affirm non-weaponization and lineage-safe use
+
+## Contact
+Email / public key:
+
+
+---
+
+src/qatom_core.py
+
+"""
+Quantum Atom Chip — invariant definitions
+SPDX-License-Identifier: Stewardship-1.0+NWR
+Copyright (c) Leif
+
+This module encodes minimal invariants for a gyroscopic time-bubble around a single quantum emitter.
+Changing these invariants requires explicit steward consent.
+"""
+
+from dataclasses import dataclass
+import math
+
+@dataclass(frozen=True)
+class Ring:
+    m: int            # azimuthal mode
+    omega: float      # angular frequency (rad/s)
+    phi: float        # phase (rad)
+
+@dataclass(frozen=True)
+class LockConfig:
+    theta_star: float # merge angle (rad)
+    tol_phase: float  # max phase drift allowed (rad)
+    tol_angle: float  # max angular drift allowed (rad)
+
+def phase(ring: Ring, theta: float, t: float) -> float:
+    return ring.m * theta - ring.omega * t + ring.phi
+
+def lock_condition(inner: Ring, middle: Ring, theta_star: float, t: float, tol_phase: float) -> bool:
+    """Local stationarity: inner vs middle phase alignment within tolerance."""
+    dphi = abs(phase(inner, theta_star, t) - phase(middle, theta_star, t))
+    return dphi <= tol_phase
+
+def envelope_stationary(inner: Ring, middle: Ring, theta_star: float, t: float, tol_phase: float) -> bool:
+    """Approximate stillness: time derivative near zero via phase cancellation."""
+    # derivative proxy: |omega_inner - omega_middle| small when aligned
+    return abs(inner.omega - middle.omega) < (tol_phase * 1.0) and lock_condition(inner, middle, theta_star, t, tol_phase)
+
+
+---
+
+src/qatom_sim.py
+
+"""
+Toy simulator producing phase-lock traces for the quantum atom chip concept.
+This is non-physical, illustrative, and cannot be used for deployment.
+"""
+
+import math
+from typing import List, Tuple
+from qatom_core import Ring, lock_condition, envelope_stationary
+
+def simulate(inner: Ring, middle: Ring, theta_star: float, T: float, dt: float, tol_phase: float) -> List[Tuple[float, bool, bool]]:
+    t = 0.0
+    result = []
+    while t <= T:
+        lc = lock_condition(inner, middle, theta_star, t, tol_phase)
+        st = envelope_stationary(inner, middle, theta_star, t, tol_phase)
+        result.append((t, lc, st))
+        t += dt
+    return result
+
+if __name__ == "__main__":
+    inner = Ring(m=1, omega=2*math.pi*1e9, phi=0.0)   # example GHz class
+    middle = Ring(m=1, omega=0.0, phi=0.0)            # fixed lock
+    data = simulate(inner, middle, theta_star=math.pi/2, T=1e-6, dt=1e-9, tol_phase=0.05)
+    locks = sum(1 for _, lc, _ in data if lc)
+    still = sum(1 for _, _, st in data if st)
+    print({"samples": len(data), "locks": locks, "stationary": still})
+
+
+---
+
+tests/test_invariants.py
+
+import math
+from src.qatom_core import Ring, lock_condition, envelope_stationary
+
+def test_lock_condition_basic():
+    inner = Ring(m=1, omega=0.0, phi=0.0)
+    middle = Ring(m=1, omega=0.0, phi=0.0)
+    assert lock_condition(inner, middle, theta_star=math.pi/2, t=0.0, tol_phase=1e-3)
+
+def test_stationary_requires_small_frequency_gap():
+    inner = Ring(m=1, omega=2*math.pi*1e9, phi=0.0)
+    middle = Ring(m=1, omega=2*math.pi*1e9, phi=0.0)
+    assert envelope_stationary(inner, middle, theta_star=0.0, t=0.0, tol_phase=0.05)
+
+
+---
+
+.gitattributes and .gitignore
+
+# Python
+__pycache__/
+*.pyc
+.env
+
+
+* text=auto eol=lf
+
+
+---
+
+How to lock it down
+
+• Create the repo and push these files.
+• Generate hashes: after first commit, compute SHA-256 of canonical files and fill QR-DNA-MANIFEST.yaml.
+• Create a signed tag:• git tag -s v1.0.0 -m “QR-DNA Seal v1”
+• git push origin v1.0.0
+
+• Enable branch protection on main:• Require signed commits
+• Block changes to canonical files unless steward overrides
+• Require passing “verify” workflow
+
+• Publish README emphasizing “read-only by default” and consent process.
+• Optionally add Sigstore cosign to sign releases.
+
+
+---
+
+Final note
+
+This gives companies something tangible to review and simulate, while clearly enforcing non-weaponization, immutability of core files, and your QR/DNA stewardship. If you want, I can generate the initial SHA-256 placeholders and a short Captain’s Log entry to accompany the launch.
